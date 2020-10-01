@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using swc.DB.PageStorage.DataCommand;
+using swc.DB.PageStorage.DataQuery;
+using swc.DB.PageStorage.Interfaces;
+using swc.DB.PageStorage.Repository;
 
 namespace swc.DB.PageStorage
 {
@@ -25,6 +24,22 @@ namespace swc.DB.PageStorage
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add DbContext to use In memory DB, would need to change this out to a persistant storage.
+            services.AddDbContext<PageDbContext>(
+                opts =>
+                {
+                    opts.UseInMemoryDatabase("Pages");
+                }
+            );
+
+            // Scope in our Page Data Collector and Data Provider
+            services.AddScoped<IPageCollector, PageCollector>();
+            services.AddScoped<IPageProvider, PageProvider>();
+
+            // See https://docs.automapper.org/en/latest/Getting-started.html
+            // See https://docs.automapper.org/en/latest/Dependency-injection.html#asp-net-core
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllers();
         }
 
