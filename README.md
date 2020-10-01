@@ -27,10 +27,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">YOUR_TITLE</h3>
+  <h3 align="center">Simple WebCrawler</h3>
 
   <p align="center">
-    YOUR_SHORT_DESCRIPTION
+	A simple web crawler in C# microservices. 
     <br />
     <a href="https://github.com/lwsmith35/SimpleWebCrawler"><strong>Explore the docs »</strong></a>
     <br />
@@ -42,7 +42,6 @@
     <a href="https://github.com/lwsmith35/SimpleWebCrawler/issues">Request Feature</a>
   </p>
 </p>
-
 
 
 <!-- TABLE OF CONTENTS -->
@@ -68,10 +67,20 @@
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 Simple starting template to be refined as project is developed.
+A simple web crawler in C# microservices. 
+
+Requirements:
+	Only crawl single domain, do not follow external links.
+	Output should present a Site Outline / Map.
+	System should be able to be built, tested, and executable.
+
+Time constraint decisions:
+	Uses REST services for intra node communication, in liu of event or message.
+	Uses in memory DB for simplicity.
+
 
 
 ### Built With
-
 * []()
 * []()
 * []()
@@ -113,18 +122,25 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 
-<!-- ROADMAP
-## Roadmap
+<!-- ROADMAP -->
+## Feature Roadmap / Considerations
+- Implement completion tracking for a domain
+- Implement a Spam contol layer so app does not DOS target site
+- Replace Orchastration layer with Pub/Sub Event layer
+- Implement external Logger
+- Enhancement for pages that require rendering, e.g. React pages
+- Persistant storage solution, GraphDB seems like a good candidate for maping
+	- Seperate Data layer (CQRS) Collectors into Command service
+	- Seperate Data layer (CQRS) Providers into Query service
 
 See the [open issues](https://github.com/lwsmith35/SimpleWebCrawler/issues) for a list of proposed features (and known issues).
---> 
 
 
 
 <!-- CONTRIBUTING -->
 ## Contributing
 
-This was a proejct built for entertainment purposes, Any contributions my be reviewed... or not. In case you find yourself bored beyond measure: 
+This was a proejct built for entertainment purposes, Any contributions my be reviewed... or not. In case you find yourself bored: 
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
