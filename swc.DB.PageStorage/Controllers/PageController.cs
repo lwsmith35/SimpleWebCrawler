@@ -23,40 +23,29 @@ namespace swc.DB.PageStorage.Controllers
             this.pageCollector = pageCollector;
         }
 
-        //[HttpGet()]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetPages()
-        //{
-        //    var result = await pageProvider.GetPagesAsync();
-        //    if (result.IsSuccess)
-        //    {
-        //        return Ok(result);
-        //    }
-        //    return NotFound();
-        //}
-
-        [HttpGet()]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPageByDomain([FromQuery] string domain)
         {
             if (!string.IsNullOrEmpty(domain))
             {
-                var result = await pageProvider.GetPagesInDomainAsync(domain);
-                if (result.IsSuccess)
+                var (IsSuccess, pages, ErrorMsg) = await pageProvider.GetPagesInDomainAsync(domain);
+                if (IsSuccess)
                 {
-                    return Ok(result.pages);
+                    return Ok(pages);
                 }
+                return NotFound(ErrorMsg);
             }
             else
             {
-                var result = await pageProvider.GetPagesAsync();
-                if (result.IsSuccess)
+                var (IsSuccess, pages, ErrorMsg) = await pageProvider.GetPagesAsync();
+                if (IsSuccess)
                 {
-                    return Ok(result.pages);
+                    return Ok(pages);
                 }
+                return NotFound(ErrorMsg);
             }
-            return NotFound();
         }
 
         [HttpGet("{id}")]
@@ -64,10 +53,10 @@ namespace swc.DB.PageStorage.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPageById([FromRoute] Guid id)
         {
-            var result = await pageProvider.GetPageByIdAsync(id);
-            if (result.IsSuccess)
+            var (IsSuccess, page, ErrorMsg) = await pageProvider.GetPageByIdAsync(id);
+            if (IsSuccess)
             {
-                return Ok(result.page);
+                return Ok(page);
             }
             return NotFound();
         }
