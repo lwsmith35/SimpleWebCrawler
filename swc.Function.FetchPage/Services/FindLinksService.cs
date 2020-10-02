@@ -13,7 +13,7 @@ namespace swc.Function.FetchPage.Services
         private readonly ILogger logger;
         private readonly IHttpClientFactory httpClientFactory;
 
-        public FindLinksService(ILogger logger, IHttpClientFactory httpClientFactory )
+        public FindLinksService(ILogger<FindLinksService> logger, IHttpClientFactory httpClientFactory )
         {
             this.logger = logger;
             this.httpClientFactory = httpClientFactory;

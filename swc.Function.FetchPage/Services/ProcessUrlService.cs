@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using swc.Function.FetchPage.Interfaces;
+using swc.Function.FetchPage.Model;
 using System;
 using System.Threading.Tasks;
 
@@ -23,12 +24,12 @@ namespace swc.Function.FetchPage.Services
         }
 
 
-        public async Task<(bool isSuccess, string corelationId)> ProcessUrl(string Url)
+        public async Task<(bool IsSuccess, string CorelationId, string ErrorMessage)> ProcessUrl(ProcessUrl request)
         {
             try
             {
                 // Fetch Headers
-                var requestHeaders = await fetchPageService.FetchTargetHeadersAsync(Url);
+                var requestHeaders = await fetchPageService.FetchTargetHeadersAsync(request.Url);
                 if (requestHeaders.IsSuccess)
                 {
                     // Validate Headers 
@@ -42,11 +43,11 @@ namespace swc.Function.FetchPage.Services
                 else
                 { 
                     // If no headers were found the site must not be valid or 
-                    return (false, null);
+                    return (false, null, "Unable to fetch site Headers");
                 }
 
                 // Fetch Content
-                var requestContent = await fetchPageService.FetchTargetContentAsync(Url);
+                var requestContent = await fetchPageService.FetchTargetContentAsync(request.Url);
                 if (requestContent.IsSuccess)
                 {
                     // Validate Content
@@ -60,15 +61,17 @@ namespace swc.Function.FetchPage.Services
                         _ = findLinksService.SendPageToLinkProcess(PageId);
                         _ = staticContentService.SendPageToStaticContentProcess(PageId);
 
-                        return (true, PageId);
+                        return (true, PageId, null);
                     }
+
+                    return (false, null, ErrorMessage);
                 }
-                return (false, null);
+                return (false, null, "Unable to fetch site content");
             }
             catch( Exception e )
             {
                 logger?.LogError(e.ToString());
-                return (false, null);
+                return (false, null, e.Message);
             }
         }
     }

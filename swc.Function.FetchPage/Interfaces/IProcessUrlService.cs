@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using swc.Function.FetchPage.Model;
+using System.Threading.Tasks;
 
 namespace swc.Function.FetchPage.Interfaces
 {
     public interface IProcessUrlService
     {
-        Task<(bool isSuccess, string corelationId)> ProcessUrl(string Url);
+        Task<(bool IsSuccess, string CorelationId, string ErrorMessage)> ProcessUrl(ProcessUrl Url);
     }
 }

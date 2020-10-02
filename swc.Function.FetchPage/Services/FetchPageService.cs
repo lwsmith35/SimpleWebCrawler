@@ -2,6 +2,7 @@
 using swc.Function.FetchPage.Interfaces;
 using swc.Function.FetchPage.Model;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -57,6 +58,8 @@ namespace swc.Function.FetchPage.Services
                 {
                     // @TODO: Introduce external mapper for Model
                     var headers = new PageHeaders();
+                    headers.headers = new List<(string HeaderKey, IEnumerable<string> HeaderValues)>();
+
                     foreach(var header in response.Headers)
                     {
                         headers.headers.Add((header.Key, header.Value));

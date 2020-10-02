@@ -21,18 +21,21 @@ namespace swc.Function.FetchPage
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddScoped<ISavePageService, SavePageService>();
-
-
+            services.AddScoped<IFetchPageService, FetchPageService>();
+            services.AddScoped<IFindLinksService, FindLinksService>();
+            services.AddScoped<IProcessStaticContentService, ProcessStaticContentService>();
+            services.AddScoped<IProcessUrlService, ProcessUrlService>();
 
             // Generic Http Client for fetching requested site
             services.AddHttpClient("ZeroConfigClient", config => { });
 
             // Related Services, Ideally only Storage would be here and orchastraion with parsing content would not be a dependency
             services.AddHttpClient("PageStorage",           config => { config.BaseAddress = new Uri(Configuration["ServiceList:PageStorage"]); });
-            services.AddHttpClient("FindLinks",             config => { config.BaseAddress = new Uri(Configuration["Services:FindLinks"]); });
-            services.AddHttpClient("ProcessStaticContent",  config => { config.BaseAddress = new Uri(Configuration["Services:ProcessStaticContent"]); });
+            services.AddHttpClient("FindLinks",             config => { config.BaseAddress = new Uri(Configuration["ServiceList:FindLinks"]); });
+            services.AddHttpClient("ProcessStaticContent",  config => { config.BaseAddress = new Uri(Configuration["ServiceList:ProcessStaticContent"]); });
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
