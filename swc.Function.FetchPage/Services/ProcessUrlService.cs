@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using swc.Function.FetchPage.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace swc.Function.FetchPage.Services
@@ -12,24 +9,35 @@ namespace swc.Function.FetchPage.Services
     {
         private readonly ILogger<ProcessUrlService> logger;
         private readonly IFetchPageService fetchPageService;
+        private readonly ISavePageService savePageService;
+        private readonly IFindLinksService findLinksService;
+        private readonly IProcessStaticContentService staticContentService;
 
-        public ProcessUrlService(ILogger<ProcessUrlService> logger, IFetchPageService fetchPageService)
+        public ProcessUrlService(ILogger<ProcessUrlService> logger, IFetchPageService fetchPageService, ISavePageService savePageService, IFindLinksService findLinksService, IProcessStaticContentService staticContentService)
         {
             this.logger = logger;
             this.fetchPageService = fetchPageService;
+            this.savePageService = savePageService;
+            this.findLinksService = findLinksService;
+            this.staticContentService = staticContentService;
         }
 
 
-        public async Task<(bool isSuccess, string corelationId)> processUrl(string Url)
+        public async Task<(bool isSuccess, string corelationId)> ProcessUrl(string Url)
         {
             try
             {
                 // Fetch Headers
                 var requestHeaders = await fetchPageService.FetchTargetHeadersAsync(Url);
-                if (requestHeaders.isSuccess)
+                if (requestHeaders.IsSuccess)
                 {
                     // Validate Headers 
-
+                    /*
+                     * Use this area to check headers 
+                     *  If possible look to optimize not refreshing a page if no changes were made, etc.
+                     *  
+                     *  For right now this serves as a light weight check before we try to download a full page
+                     */
                 }
                 else
                 { 
@@ -38,15 +46,22 @@ namespace swc.Function.FetchPage.Services
                 }
 
                 // Fetch Content
-                var requestContent = await fetchPageService.FetchTargetHeadersAsync(Url);
-                if (requestContent.isSuccess)
+                var requestContent = await fetchPageService.FetchTargetContentAsync(Url);
+                if (requestContent.IsSuccess)
                 {
                     // Validate Content
+
                     // Save Content
+                    var (IsSuccess, PageId, ErrorMessage) = await savePageService.SavePage(requestContent.PageContent.SourceURL, requestContent.PageContent.RawContent);
+                    if (IsSuccess)
+                    {
+                        // Kick off Orchestration Request OR Embed Orchastration Here
+                        // Skipping awaits here as we should be processing contect asyncronously
+                        _ = findLinksService.SendPageToLinkProcess(PageId);
+                        _ = staticContentService.SendPageToStaticContentProcess(PageId);
 
-                    // Kick off Orchestration Request OR Embed Orchastration Here
-
-                    return (true, Guid.NewGuid().ToString());
+                        return (true, PageId);
+                    }
                 }
                 return (false, null);
             }

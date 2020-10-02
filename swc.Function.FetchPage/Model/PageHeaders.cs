@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace swc.Function.FetchPage.Model
 {
     public class PageHeaders
     {
-        public IEnumerable<(string hKey, string KValue)> headers;
+        public IList<(string HeaderKey, IEnumerable<string> HeaderValues)> headers;
     }
 }

@@ -2,8 +2,6 @@
 using swc.Function.FetchPage.Interfaces;
 using swc.Function.FetchPage.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,7 +18,7 @@ namespace swc.Function.FetchPage.Services
             this.httpClientFactory = httpClientFactory;
         }
         
-        public async Task<(bool isSuccess, PageContent, string ErrorMsg)> FetchTargetContentAsync(string url)
+        public async Task<(bool IsSuccess, PageContent PageContent, string ErrorMsg)> FetchTargetContentAsync(string url)
         {
             try
             {
@@ -34,7 +32,7 @@ namespace swc.Function.FetchPage.Services
                             new PageContent()
                             {
                                 SourceURL = url,
-                                RawContent = response.Content.ToString()
+                                RawContent = await response.Content.ReadAsStringAsync()
                             },
                             null);
 
@@ -48,7 +46,7 @@ namespace swc.Function.FetchPage.Services
             }
         }
 
-        public async Task<(bool isSuccess, PageHeaders, string ErrorMsg)> FetchTargetHeadersAsync(string url)
+        public async Task<(bool IsSuccess, PageHeaders PageHeaders, string ErrorMsg)> FetchTargetHeadersAsync(string url)
         {
             try
             {
@@ -58,8 +56,13 @@ namespace swc.Function.FetchPage.Services
                 if (response.IsSuccessStatusCode)
                 {
                     // @TODO: Introduce external mapper for Model
+                    var headers = new PageHeaders();
+                    foreach(var header in response.Headers)
+                    {
+                        headers.headers.Add((header.Key, header.Value));
+                    }
 
-
+                    return (true, headers, null);
                 }
                 return (false, null, response.ReasonPhrase);
             }

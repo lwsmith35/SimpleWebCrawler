@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using swc.Function.FetchPage.Interfaces;
@@ -24,12 +21,12 @@ namespace swc.Function.FetchPage.Controllers
         [HttpPost]
         public async Task<IActionResult> processUrl(string url)
         {
-            var result = await processUrlService.processUrl(url);
-            if (result.isSuccess)
+            var (isSuccess, corelationId) = await processUrlService.ProcessUrl(url);
+            if (isSuccess)
             {
-                return Ok(result.corelationId);
+                return Accepted(corelationId);
             }
-            return BadRequest();
+            return BadRequest("Unable to reach page for processing");
         }
     }
 }
