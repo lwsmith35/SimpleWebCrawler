@@ -3,8 +3,9 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:54393",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:54393"
+      //"httpPort": 54393,
+      //"sslPort": 44393
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -19,7 +20,7 @@
     },
     "swc.DB.PageStorage": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "api/pages",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -28,10 +29,12 @@
     },
     "Docker": {
       "commandName": "Docker",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/pages",
       "publishAllPorts": true,
-      "useSSL": false
+      "httpPort": 54393
+      //"useSSL": true,
+      //"sslPort": 44393
     }
   }
 }

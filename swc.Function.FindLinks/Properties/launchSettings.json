@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:54337",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:54337"
+      //"sslPort": 44337
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -31,7 +31,9 @@
       "launchBrowser": false,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/FindLinks",
       "publishAllPorts": true,
-      "useSSL": false
+      "httpPort": 54337
+      //"useSSL": true,
+      //"sslPort":  44337
     }
   }
 }
