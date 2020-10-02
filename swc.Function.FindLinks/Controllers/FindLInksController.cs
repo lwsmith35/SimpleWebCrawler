@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace swc.Function.FindLinks.Controllers
 {
     [ApiController]
-    [Route("[api/FindLinks")]
+    [Route("api/FindLinks")]
     public class FindLInksController : ControllerBase
     {
         private readonly ILogger<FindLInksController> logger;
@@ -29,9 +29,18 @@ namespace swc.Function.FindLinks.Controllers
                 return BadRequest("Unable to parse URI");
             }
 
+            await Task.Delay(100);
             return Accepted();
             //var pageResult = await pageCollector.SavePageAsync(newPage);
             // return CreatedAtAction(nameof(GetPageById), new { id = pageResult.Id }, pageResult);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ApiAck()
+        {
+            await Task.Delay(1);
+            return Ok($"{this.GetType().Name} is alive");
         }
     }
 }
