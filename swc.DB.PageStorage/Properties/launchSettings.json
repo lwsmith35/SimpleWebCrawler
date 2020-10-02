@@ -19,7 +19,7 @@
     },
     "swc.DB.PageStorage": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/pages",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -28,10 +28,10 @@
     },
     "Docker": {
       "commandName": "Docker",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/pages",
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": false
     }
   }
 }

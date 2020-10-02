@@ -19,7 +19,7 @@
     },
     "swc.Function.ProcessStaticContent": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/ProcessStaticContect",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -28,10 +28,10 @@
     },
     "Docker": {
       "commandName": "Docker",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/ProcessStaticContect",
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": false
     }
   }
 }

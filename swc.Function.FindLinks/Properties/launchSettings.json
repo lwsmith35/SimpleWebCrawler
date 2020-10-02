@@ -19,7 +19,7 @@
     },
     "swc.Function.FindLinks": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/FindLinks",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -28,9 +28,10 @@
     },
     "Docker": {
       "commandName": "Docker",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/FindLinks",
-      "publishAllPorts": true
+      "publishAllPorts": true,
+      "useSSL": false
     }
   }
 }

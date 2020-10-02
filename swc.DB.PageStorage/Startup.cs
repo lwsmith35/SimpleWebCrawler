@@ -36,6 +36,7 @@ namespace swc.DB.PageStorage
             services.AddScoped<IPageCollector, PageCollector>();
             services.AddScoped<IPageProvider, PageProvider>();
 
+            // Want to know about AutoMapper 
             // See https://docs.automapper.org/en/latest/Getting-started.html
             // See https://docs.automapper.org/en/latest/Dependency-injection.html#asp-net-core
             services.AddAutoMapper(typeof(Startup));
@@ -51,7 +52,7 @@ namespace swc.DB.PageStorage
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

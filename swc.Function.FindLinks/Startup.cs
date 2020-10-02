@@ -35,6 +35,8 @@ namespace swc.Function.FindLinks
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseAuthorization();
