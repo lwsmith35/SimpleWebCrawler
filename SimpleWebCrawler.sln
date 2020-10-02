@@ -4,16 +4,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebCrawler", "SimpleWebCrawler\SimpleWebCrawler.csproj", "{41F512CD-3C7D-4EB6-A846-E9BF763C2752}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F620D6AC-C66F-4ED5-9E21-618BA2047D27} = {F620D6AC-C66F-4ED5-9E21-618BA2047D27}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "swc.Function.FindLinks", "swc.Function.FindLinks\swc.Function.FindLinks.csproj", "{C3795692-7117-4970-9CDA-1DBA2F62563F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4BBA3D86-7165-43C5-A5B2-AF70F907A6A5} = {4BBA3D86-7165-43C5-A5B2-AF70F907A6A5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "swc.Function.ProcessStaticContent", "swc.Function.ProcessStaticContent\swc.Function.ProcessStaticContent.csproj", "{189234C7-762D-4865-B2A5-B5CF881174C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4BBA3D86-7165-43C5-A5B2-AF70F907A6A5} = {4BBA3D86-7165-43C5-A5B2-AF70F907A6A5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "swc.Function.FetchPage", "swc.Function.FetchPage\swc.Function.FetchPage.csproj", "{F620D6AC-C66F-4ED5-9E21-618BA2047D27}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4BBA3D86-7165-43C5-A5B2-AF70F907A6A5} = {4BBA3D86-7165-43C5-A5B2-AF70F907A6A5}
+		{C3795692-7117-4970-9CDA-1DBA2F62563F} = {C3795692-7117-4970-9CDA-1DBA2F62563F}
+		{189234C7-762D-4865-B2A5-B5CF881174C9} = {189234C7-762D-4865-B2A5-B5CF881174C9}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "swc.DB.PageStorage", "swc.DB.PageStorage\swc.DB.PageStorage.csproj", "{4BBA3D86-7165-43C5-A5B2-AF70F907A6A5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "swc.Orchastration.ProcessPage", "swc.Orchastration.ProcessPage\swc.Orchastration.ProcessPage.csproj", "{0C4C0484-94D5-455F-BC63-64442AA08F90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F8FDC21A-8472-4BD2-A81A-65EC13CA1872}"
 	ProjectSection(SolutionItems) = preProject
@@ -47,10 +59,6 @@ Global
 		{4BBA3D86-7165-43C5-A5B2-AF70F907A6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BBA3D86-7165-43C5-A5B2-AF70F907A6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BBA3D86-7165-43C5-A5B2-AF70F907A6A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C4C0484-94D5-455F-BC63-64442AA08F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C4C0484-94D5-455F-BC63-64442AA08F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C4C0484-94D5-455F-BC63-64442AA08F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C4C0484-94D5-455F-BC63-64442AA08F90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
