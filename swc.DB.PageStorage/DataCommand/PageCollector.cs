@@ -41,7 +41,7 @@ namespace swc.DB.PageStorage.DataCommand
                 // Map new Page
                 var newPage = autoMap.Map<Model.NewPage, Repository.Page>(page);
                 newPage.Id = Guid.NewGuid();
-                newPage.Domain = domain;
+                newPage.Domain = domain.ToUpperInvariant();
                 newPage.ResourceLocation = resource;
 
                 // Save Page

@@ -88,7 +88,7 @@ namespace swc.DB.PageStorage.DataQuery
             try
             {
                 // Get Pages by Domain
-                var pages = await dbContext.Page.Where(p => p.Domain == domain)
+                var pages = await dbContext.Page.Where(p => p.Domain == domain.ToUpperInvariant())
                     // Include Links
                     // Include Content
                     .Select(p => new Repository.Page
