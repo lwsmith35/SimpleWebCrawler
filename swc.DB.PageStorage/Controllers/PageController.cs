@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using swc.DB.PageStorage.Interfaces;
 
 namespace swc.DB.PageStorage.Controllers
@@ -33,7 +34,7 @@ namespace swc.DB.PageStorage.Controllers
                 var (IsSuccess, pages, ErrorMsg) = await pageProvider.GetPagesInDomainAsync(domain);
                 if (IsSuccess)
                 {
-                    return Ok(pages);
+                    return Ok(JsonConvert.SerializeObject(pages, Formatting.Indented));
                 }
                 return NotFound(ErrorMsg);
             }
@@ -42,7 +43,7 @@ namespace swc.DB.PageStorage.Controllers
                 var (IsSuccess, pages, ErrorMsg) = await pageProvider.GetPagesAsync();
                 if (IsSuccess)
                 {
-                    return Ok(pages);
+                    return Ok(JsonConvert.SerializeObject(pages, Formatting.Indented));
                 }
                 return NotFound(ErrorMsg);
             }

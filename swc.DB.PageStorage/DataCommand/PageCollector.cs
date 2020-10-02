@@ -33,7 +33,7 @@ namespace swc.DB.PageStorage.DataCommand
 
                 // Validate if we already have this page
                 var existingPage = await dbContext.Page.Where(p => p.Domain == domain && p.ResourceLocation == resource).Select(p=> p.Id).FirstOrDefaultAsync();
-                if (existingPage != null)
+                if (existingPage != Guid.Empty)
                 {
                     return (true, existingPage, null);
                 };
