@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using swc.Function.ProcessStaticContent.Model;
 
 namespace swc.Function.FindLinks.Controllers
 {
@@ -24,9 +25,9 @@ namespace swc.Function.FindLinks.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ProcessStaticContent([FromBody]string PageId)
+        public async Task<IActionResult> ProcessStaticContent([FromBody]PageRequestId page)
         {
-            logger?.LogInformation($"Processing Static Content for {PageId}");
+            logger?.LogInformation($"Processing Static Content for {page.PageId}");
             if (false)
             {
                 return BadRequest("Unable to parse URI");
