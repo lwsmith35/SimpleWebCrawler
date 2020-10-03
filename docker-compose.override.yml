@@ -22,6 +22,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ServiceList__PageStorage=http://swc.db.pagestorage
+      - ServiceList__FetchPage=http://swc.function.fetchpage
     ports:
       - "3502:80"
 

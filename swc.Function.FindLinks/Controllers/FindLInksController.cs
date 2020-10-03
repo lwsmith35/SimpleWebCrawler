@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using swc.Function.FindLinks.Interfaces;
 using swc.Function.FindLinks.Model;
 
 namespace swc.Function.FindLinks.Controllers
@@ -12,10 +13,12 @@ namespace swc.Function.FindLinks.Controllers
     public class FindLInksController : ControllerBase
     {
         private readonly ILogger<FindLInksController> logger;
+        private readonly IFindLinksService findLinks;
 
-        public FindLInksController(ILogger<FindLInksController> logger)
+        public FindLInksController(ILogger<FindLInksController> logger, IFindLinksService findLinks)
         {
             this.logger = logger;
+            this.findLinks = findLinks;
         }
 
         [HttpPost]
@@ -30,10 +33,8 @@ namespace swc.Function.FindLinks.Controllers
                 return BadRequest("Unable to parse URI");
             }
 
-            await Task.Delay(100);
+            _ = await findLinks.ParseLinksFromPageAsync(page);
             return Accepted();
-            //var pageResult = await pageCollector.SavePageAsync(newPage);
-            // return CreatedAtAction(nameof(GetPageById), new { id = pageResult.Id }, pageResult);
         }
 
         [HttpGet]
