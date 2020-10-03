@@ -3,11 +3,11 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["swc.Function.ProcessStaticContent/swc.Function.ProcessStaticContent.csproj", "swc.Function.ProcessStaticContent/"]
+COPY ["swc.DB.PageStorage/swc.DB.PageStorage.csproj", "swc.DB.PageStorage/"]
 RUN dotnet restore "swc.Function.ProcessStaticContent/swc.Function.ProcessStaticContent.csproj"
 COPY . .
 WORKDIR "/src/swc.Function.ProcessStaticContent"

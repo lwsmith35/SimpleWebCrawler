@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  swc.db.pagestorage:
+    image: ${DOCKER_REGISTRY-}swcdbpagestorage
+    build:
+      context: .
+      dockerfile: swc.DB.PageStorage/Dockerfile
+
+  swc.function.fetchpage:
+    image: ${DOCKER_REGISTRY-}swcfunctionfetchpage
+    build:
+      context: .
+      dockerfile: swc.Function.FetchPage/Dockerfile
+
+
+  swc.function.findlinks:
+    image: ${DOCKER_REGISTRY-}swcfunctionfindlinks
+    build:
+      context: .
+      dockerfile: swc.Function.FindLinks/Dockerfile
+
+
+  swc.function.processstaticcontent:
+    image: ${DOCKER_REGISTRY-}swcfunctionprocessstaticcontent
+    build:
+      context: .
+      dockerfile: swc.Function.ProcessStaticContent/Dockerfile
+

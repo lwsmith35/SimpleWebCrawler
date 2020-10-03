@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  swc.db.pagestorage:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "3501:80"
+
+
+  swc.function.fetchpage:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ServiceList__PageStorage=http://swc.db.pagestorage
+      - ServiceList__FindLinks=http://swc.function.findlinks
+      - ServiceList__ProcessStaticContent=http://swc.function.processstaticcontent
+    ports:
+      - "3500:80"
+
+
+  swc.function.findlinks:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ServiceList__PageStorage=http://swc.db.pagestorage
+    ports:
+      - "3502:80"
+
+
+  swc.function.processstaticcontent:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ServiceList__PageStorage=http://swc.db.pagestorage
+    ports:
+      - "3503:80"

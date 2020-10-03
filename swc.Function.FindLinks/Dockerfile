@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["swc.Function.FindLinks/swc.Function.FindLinks.csproj", "swc.Function.FindLinks/"]
+COPY ["swc.DB.PageStorage/swc.DB.PageStorage.csproj", "swc.DB.PageStorage/"]
 RUN dotnet restore "swc.Function.FindLinks/swc.Function.FindLinks.csproj"
 COPY . .
 WORKDIR "/src/swc.Function.FindLinks"
