@@ -5,6 +5,6 @@ namespace swc.Function.FetchPage.Interfaces
 {
     public interface IProcessUrlService
     {
-        Task<(bool IsSuccess, string CorelationId, string ErrorMessage)> ProcessUrl(ProcessUrl Url);
+        Task<(bool IsSuccess, CreatedPage Page, string ErrorMessage)> ProcessUrl(ProcessUrl Url);
     }
 }

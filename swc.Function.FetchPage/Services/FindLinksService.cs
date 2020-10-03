@@ -19,7 +19,7 @@ namespace swc.Function.FetchPage.Services
             this.httpClientFactory = httpClientFactory;
         }
 
-        public Task<HttpResponseMessage> SendPageToLinkProcess(string PageId)
+        public Task<HttpResponseMessage> SendPageToLinkProcess(Guid PageId)
         {
             try
             {

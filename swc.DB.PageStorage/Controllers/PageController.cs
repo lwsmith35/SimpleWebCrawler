@@ -67,6 +67,7 @@ namespace swc.DB.PageStorage.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> SavePage([FromBody]Model.NewPage newPage)
         {
             if (! Uri.TryCreate(newPage.ResourceUrl, UriKind.RelativeOrAbsolute, out var uri) )
@@ -74,9 +75,13 @@ namespace swc.DB.PageStorage.Controllers
                 return BadRequest("Unable to parse URI");
             }
 
-            var pageResult = await pageCollector.SavePageAsync(newPage);
+            var (IsSuccess, Id, ErrorMessage) = await pageCollector.SavePageAsync(newPage);
+            if (IsSuccess && Id != Guid.Empty)
+            {
+                return CreatedAtAction(nameof(GetPageById), new { id = Id }, JsonConvert.SerializeObject(new { Id = Id }));
+            }
 
-            return CreatedAtAction(nameof(GetPageById), new { id = pageResult.Id }, pageResult);
+            return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);
         }
     }
 }

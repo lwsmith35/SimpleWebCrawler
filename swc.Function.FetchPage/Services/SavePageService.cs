@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using swc.Function.FetchPage.Interfaces;
+using swc.Function.FetchPage.Model;
 using System;
 using System.Net.Http;
 using System.Text;
@@ -19,11 +20,10 @@ namespace swc.Function.FetchPage.Services
             this.httpClientFactory = httpClientFactory;
         }
 
-        public async Task<(bool IsSuccess, string PageId, string ErrorMessage)> SavePage(string resourceUrl, string pageContent)
+        public async Task<(bool IsSuccess, CreatedPage page, string ErrorMessage)> SavePage(string resourceUrl, string pageContent)
         {
             try
             {
-
                 var content = JsonConvert.SerializeObject(new
                 {
                     ResourceUrl = resourceUrl,
@@ -34,9 +34,11 @@ namespace swc.Function.FetchPage.Services
                     var pageDbClient = httpClientFactory.CreateClient("PageStorage");
                     var result = await pageDbClient.PostAsync("api/pages", stringContent);
 
+
                     if (result.IsSuccessStatusCode)
                     {
-                        return (true, "", null);
+                        var page = JsonConvert.DeserializeObject<CreatedPage>(await result.Content.ReadAsStringAsync());
+                        return (true, page, null);
                     }
 
                     return (false, null, $"Failed to save page: {result.ReasonPhrase}");

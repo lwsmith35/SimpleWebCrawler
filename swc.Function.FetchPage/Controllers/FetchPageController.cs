@@ -27,10 +27,10 @@ namespace swc.Function.FetchPage.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ProcessUrl([FromBody] ProcessUrl url )
         {
-            var (isSuccess, corelationId, ErrorMessage) = await processUrlService.ProcessUrl(url);
+            var (isSuccess, Page, ErrorMessage) = await processUrlService.ProcessUrl(url);
             if (isSuccess)
             {
-                return Accepted(corelationId);
+                return Accepted(Page);
             }
             return BadRequest(ErrorMessage??$"Unable to process requested url {url}");
         }

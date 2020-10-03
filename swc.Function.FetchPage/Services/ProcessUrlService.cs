@@ -24,7 +24,7 @@ namespace swc.Function.FetchPage.Services
         }
 
 
-        public async Task<(bool IsSuccess, string CorelationId, string ErrorMessage)> ProcessUrl(ProcessUrl request)
+        public async Task<(bool IsSuccess, CreatedPage Page, string ErrorMessage)> ProcessUrl(ProcessUrl request)
         {
             try
             {
@@ -53,15 +53,15 @@ namespace swc.Function.FetchPage.Services
                     // Validate Content
 
                     // Save Content
-                    var (IsSuccess, PageId, ErrorMessage) = await savePageService.SavePage(requestContent.PageContent.SourceURL, requestContent.PageContent.RawContent);
+                    var (IsSuccess, newPage, ErrorMessage) = await savePageService.SavePage(requestContent.PageContent.SourceURL, requestContent.PageContent.RawContent);
                     if (IsSuccess)
                     {
                         // Kick off Orchestration Request OR Embed Orchastration Here
                         // Skipping awaits here as we should be processing contect asyncronously
-                        _ = findLinksService.SendPageToLinkProcess(PageId);
-                        _ = staticContentService.SendPageToStaticContentProcess(PageId);
+                        _ = findLinksService.SendPageToLinkProcess(newPage.Id);
+                        _ = staticContentService.SendPageToStaticContentProcess(newPage.Id);
 
-                        return (true, PageId, null);
+                        return (true, newPage, null);
                     }
 
                     return (false, null, ErrorMessage);
