@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "42132bb5-aa05-452c-b00d-1a227ee9aed8",
+		"name": "SimpleWebCrawler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CrawlProcess",
+			"item": [
+				{
+					"name": "1. WebCrawl Seed Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\" : \"http://wiprodigital.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3500/api/ProcessUrl",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"ProcessUrl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. FetchPages by Domain",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3501/api/pages?domain=wiprodigital.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3501",
+							"path": [
+								"api",
+								"pages"
+							],
+							"query": [
+								{
+									"key": "domain",
+									"value": "wiprodigital.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SupportFunctions",
+			"item": [
+				{
+					"name": "2. Save Page to Repository",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ResourceUrl\" : \"https://aFakeTestSite.com/\",\r\n    \"RawContent\" : \"<html></html>\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3501/api/pages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3501",
+							"path": [
+								"api",
+								"pages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.a: Delete Page from Repository",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3501/api/pages/29ae74a1-eba5-4616-9c54-707270495094",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3501",
+							"path": [
+								"api",
+								"pages",
+								"29ae74a1-eba5-4616-9c54-707270495094"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3a. FindLinks in Page",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"PageId\" : \"7d99107b-5010-4ead-8964-e9ed596e9e09\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3502/api/FindLinks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3502",
+							"path": [
+								"api",
+								"FindLinks"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
