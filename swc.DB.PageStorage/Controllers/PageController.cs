@@ -15,9 +15,9 @@ namespace swc.DB.PageStorage.Controllers
     {
         private readonly ILogger<PageController> logger;
         private readonly IPageProvider pageProvider;
-        private readonly IPageCollector pageCollector;
+        private readonly IPageCommand pageCollector;
 
-        public PageController(ILogger<PageController> logger, IPageProvider pageProvider, IPageCollector pageCollector)
+        public PageController(ILogger<PageController> logger, IPageProvider pageProvider, IPageCommand pageCollector)
         {
             this.logger = logger;
             this.pageProvider = pageProvider;
@@ -62,10 +62,23 @@ namespace swc.DB.PageStorage.Controllers
             return NotFound();
         }
 
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeletePageById([FromRoute] Guid id)
+        {
+            var (IsSuccess, ErrorMsg) = await pageCollector.DeletePageByIdAsync(id);
+            if (IsSuccess)
+            {
+                return Ok();
+            }
+            return NotFound(ErrorMsg);
+        }
 
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status303SeeOther)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> SavePage([FromBody]Model.NewPage newPage)
@@ -75,10 +88,14 @@ namespace swc.DB.PageStorage.Controllers
                 return BadRequest("Unable to parse URI");
             }
 
-            var (IsSuccess, Id, ErrorMessage) = await pageCollector.SavePageAsync(newPage);
+            var (IsSuccess, Id, PageExists, ErrorMessage) = await pageCollector.SavePageAsync(newPage);
             if (IsSuccess && Id != Guid.Empty)
             {
-                return CreatedAtAction(nameof(GetPageById), new { id = Id }, JsonConvert.SerializeObject(new { Id = Id }));
+                if (PageExists)
+                {
+                    return StatusCode(StatusCodes.Status303SeeOther, JsonConvert.SerializeObject(new { Id = Id}));
+                }
+                return CreatedAtAction(nameof(GetPageById), new { id = Id }, JsonConvert.SerializeObject(new { Id = Id}));
             }
 
             return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessage);

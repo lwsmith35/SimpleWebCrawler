@@ -33,7 +33,7 @@ namespace swc.DB.PageStorage
             );
 
             // Scope in our Page Data Collector and Data Provider
-            services.AddScoped<IPageCollector, PageCollector>();
+            services.AddScoped<IPageCommand, PageCommand>();
             services.AddScoped<IPageProvider, PageProvider>();
 
             // Want to know about AutoMapper 

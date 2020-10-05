@@ -30,7 +30,6 @@ namespace swc.DB.PageStorage.DataQuery
             try
             {
                 logger?.LogInformation("Fetching all pages.");
-                //var pages = await dbContext.Page.ToListAsync();
 
                 // Get List of pages, make sure to exclude rawContent for efficiencies
                 var pages = await dbContext.Page

@@ -34,14 +34,13 @@ namespace swc.Function.FetchPage.Services
                     var pageDbClient = httpClientFactory.CreateClient("PageStorage");
                     var result = await pageDbClient.PostAsync("api/pages", stringContent);
 
-
                     if (result.IsSuccessStatusCode)
                     {
                         var page = JsonConvert.DeserializeObject<CreatedPage>(await result.Content.ReadAsStringAsync());
                         return (true, page, null);
                     }
 
-                    return (false, null, $"Failed to save page: {result.ReasonPhrase}");
+                    return (false, null, $"Failed to save page: {result.ReasonPhrase}: {await result.Content.ReadAsStringAsync()}");
                 };
             }
             catch (Exception e)

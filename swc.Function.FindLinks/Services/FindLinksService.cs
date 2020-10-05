@@ -49,7 +49,7 @@ namespace swc.Function.FindLinks.Services
                     {
                         if (uri.Host.Equals(page.Domain, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            logger?.LogInformation($"Crawling to Page -{page.Domain}-");
+                            logger?.LogInformation($"Crawling to Page -{page.Domain}/{page.ResourceLocation}-");
                             using var stringContent = new StringContent(JsonConvert.SerializeObject(new { url = href }), Encoding.UTF8, "application/json");
                             _ = fetchUrlClient.PostAsync("api/ProcessUrl", stringContent);
                             linksFollowed++;

@@ -9,20 +9,41 @@ using System.Threading.Tasks;
 
 namespace swc.DB.PageStorage.DataCommand
 {
-    public class PageCollector : IPageCollector
+    public class PageCommand : IPageCommand
     {
         private readonly ILogger logger;
         private readonly IMapper autoMap;
         private readonly PageDbContext dbContext;
 
-        public PageCollector(ILogger<PageCollector> logger, IMapper autoMap, PageDbContext dbContext )
+        public PageCommand(ILogger<PageCommand> logger, IMapper autoMap, PageDbContext dbContext )
         {
             this.logger = logger;
             this.autoMap = autoMap;
             this.dbContext = dbContext;
         }
 
-        public async Task<(bool IsSuccess, Guid? Id, string ErrorMessage)> SavePageAsync(Model.NewPage page)
+        public async Task<(bool IsSuccess, string ErrorMessage)> DeletePageByIdAsync(Guid PageId)
+        { try {
+                var entity = await dbContext.Page.FirstOrDefaultAsync(page => page.Id == PageId);
+                if (entity != null && entity.Id != Guid.Empty)
+                {
+                    var result = dbContext.Page.Remove(entity);
+                    _ = await dbContext.SaveChangesAsync();
+
+                    return (true, null);
+                }
+
+                return (false, "Failed to delete specified Entity");
+            }
+            catch (Exception e)
+            {
+                logger?.LogError(e.ToString());
+                return (false, e.Message);
+            }
+
+        }
+
+        public async Task<(bool IsSuccess, Guid? Id, bool PageExists, string ErrorMessage)> SavePageAsync(Model.NewPage page)
         {
             try
             {
@@ -32,10 +53,9 @@ namespace swc.DB.PageStorage.DataCommand
                 var resource = targetUri.AbsolutePath;
 
                 // Validate if we already have this page
-                var existingPage = await dbContext.Page.Where(p => p.Domain == domain && p.ResourceLocation == resource).Select(p=> p.Id).FirstOrDefaultAsync();
-                if (existingPage != Guid.Empty)
+                var existingPage = await dbContext.Page.Where(p => p.Domain == domain.ToUpperInvariant() && p.ResourceLocation == resource).Select(p=> p.Id).FirstOrDefaultAsync(); if (existingPage != Guid.Empty)
                 {
-                    return (true, existingPage, null);
+                    return (true, existingPage, true, null);
                 };
 
                 // Map new Page
@@ -48,12 +68,12 @@ namespace swc.DB.PageStorage.DataCommand
                 dbContext.Page.Add(newPage);
                 await dbContext.SaveChangesAsync();
 
-                return (true, newPage.Id, null);
+                return (true, newPage.Id, false, null);
             }
             catch (Exception e)
             {
                 logger?.LogError(e.ToString());
-                return (false, null, e.Message);
+                return (false, null, false, e.Message);
             }
         }
     }
