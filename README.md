@@ -92,7 +92,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 This is an example of how to list things you need to use the software and how to install them.
-* Docker environment e.g Docker Desktop ([MAC](https://docs.docker.com/docker-for-mac/install/} | [Windows](https://docs.docker.com/docker-for-windows/install/))
+* Docker environment e.g Docker Desktop ( [MAC](https://docs.docker.com/docker-for-mac/install/} | [Windows](https://docs.docker.com/docker-for-windows/install/))
 
 ### Installation
 1. Clone the repo
