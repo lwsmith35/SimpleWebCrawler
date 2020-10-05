@@ -29,19 +29,17 @@ namespace swc.Function.FetchPage.Services
                     ResourceUrl = resourceUrl,
                     RawContent = pageContent
                 });
-                using (var stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
+                var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+                var pageDbClient = httpClientFactory.CreateClient("PageStorage");
+                var result = await pageDbClient.PostAsync("api/pages", stringContent);
+
+                if (result.IsSuccessStatusCode)
                 {
-                    var pageDbClient = httpClientFactory.CreateClient("PageStorage");
-                    var result = await pageDbClient.PostAsync("api/pages", stringContent);
+                    var page = JsonConvert.DeserializeObject<CreatedPage>(await result.Content.ReadAsStringAsync());
+                    return (true, page, null);
+                }
 
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var page = JsonConvert.DeserializeObject<CreatedPage>(await result.Content.ReadAsStringAsync());
-                        return (true, page, null);
-                    }
-
-                    return (false, null, $"Failed to save page: {result.ReasonPhrase}: {await result.Content.ReadAsStringAsync()}");
-                };
+                return (false, null, $"Failed to save page: {result.ReasonPhrase}: {await result.Content.ReadAsStringAsync()}");
             }
             catch (Exception e)
             {

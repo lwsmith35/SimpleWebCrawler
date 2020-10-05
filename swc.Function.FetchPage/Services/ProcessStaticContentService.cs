@@ -28,12 +28,10 @@ namespace swc.Function.FetchPage.Services
                     PageId
                 });
 
-                using (var stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
-                {
-                    var staticContentClient = httpClientFactory.CreateClient("ProcessStaticContent");
-                    var result = staticContentClient.PostAsync("api/ProcessStaticContent", stringContent);
-                    return result;
-                }
+                var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+                var staticContentClient = httpClientFactory.CreateClient("ProcessStaticContent");
+                var result = staticContentClient.PostAsync("api/ProcessStaticContent", stringContent);
+                return result;
             }
             catch (Exception e)
             {

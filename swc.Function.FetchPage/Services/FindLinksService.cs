@@ -28,12 +28,10 @@ namespace swc.Function.FetchPage.Services
                 {
                     PageId
                 });
-                using (var stringContent = new StringContent(content, Encoding.UTF8, "application/json"))
-                {
-                    var linksClient = httpClientFactory.CreateClient("FindLinks");
-                    var result = linksClient.PostAsync("api/FindLinks", stringContent);
-                    return result;
-                };
+                var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+                var linksClient = httpClientFactory.CreateClient("FindLinks");
+                var result = linksClient.PostAsync("api/FindLinks", stringContent);
+                return result;
             }
             catch (Exception e)
             {

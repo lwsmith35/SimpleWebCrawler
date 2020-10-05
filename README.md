@@ -11,21 +11,25 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+<!--
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+-->
 
 
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
+ <!-- 
   <a href="https://github.com/lwsmith35/SimpleWebCrawler">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
+  -->
 
   <h3 align="center">Simple WebCrawler</h3>
 
@@ -35,7 +39,7 @@
     <a href="https://github.com/lwsmith35/SimpleWebCrawler"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/lwsmith35/SimpleWebCrawler">View Demo</a>
+    <!-- <a href="https://github.com/lwsmith35/SimpleWebCrawler">View Demo</a> -->
     ·
     <a href="https://github.com/lwsmith35/SimpleWebCrawler/issues">Report Bug</a>
     ·
@@ -63,14 +67,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Simple starting template to be refined as project is developed.
-A simple web crawler in C# microservices. 
+A simple web crawler in C# as microservices. 
 
 Requirements:
-	Only crawl single domain, do not follow external links.
+	Crawl a single domain, do not follow external links.
 	Output should present a Site Outline / Map.
 	System should be able to be built, tested, and executable.
 
@@ -81,10 +81,8 @@ Time constraint decisions:
 
 
 ### Built With
-* []()
-* []()
-* []()
-
+* [Docker](https://www.docker.com/)
+* [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
 
 <!-- GETTING STARTED -->
@@ -93,38 +91,47 @@ Time constraint decisions:
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
-
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
-```
+* Docker environment e.g Docker Desktop ([MAC](https://docs.docker.com/docker-for-mac/install/} | [Windows](https://docs.docker.com/docker-for-windows/install/))
 
 ### Installation
-
 1. Clone the repo
 ```sh
 git clone https://github.com/lwsmith35/SimpleWebCrawler.git
 ```
-2. Install NPM packages
+2. Docker Compose the application, build and load app services into Docker
 ```sh
-npm install
+cd <Your Cloned Directory>
+docker-compose  -f "docker-compose.yml" -f "docker-compose.override.yml" -p SWC --no-ansi up
 ```
-
+3. Using Postman import collection: https://github.com/lwsmith35/SimpleWebCrawler/blob/master/Documents/Postman%20API%20Support/SimpleWebCrawler.postman_collection.json
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+Simplest use case requires two REST API calls. These can be found in the Postman collection OR built in any REST client tool.
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+1. Issue request to crawl site:
+```
+    POST: http://localhost:3500/api/ProcessUrl
+    Body: 
+        {
+            "url" : "http://SiteToCrawl.com"
+        }
+```
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+2. Review pages found and crawled within domain
+```
+    GET: http://localhost:3501/api/pages?domain=SiteToCrawl.com
+```
 
 
 
 <!-- ROADMAP -->
 ## Feature Roadmap / Considerations
-- Implement completion tracking for a domain
+- Implement tracking for a domain crawl
+- Enhanced transient handling when fetching public pages
+    * Retries, SSL Cert handling, Rejected or cut off requests
 - Implement a Spam contol layer so app does not DOS target site
 - Replace Orchastration layer with Pub/Sub Event layer
 - Implement external Logger
@@ -140,7 +147,7 @@ See the [open issues](https://github.com/lwsmith35/SimpleWebCrawler/issues) for 
 <!-- CONTRIBUTING -->
 ## Contributing
 
-This was a proejct built for entertainment purposes, Any contributions my be reviewed... or not. In case you find yourself bored: 
+This was a project built for entertainment purposes, Any contributions may ... but not likely... be reviewed. In case you find yourself bored: 
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -149,12 +156,9 @@ This was a proejct built for entertainment purposes, Any contributions my be rev
 5. Open a Pull Request
 
 
-
 <!-- LICENSE -->
 ## License
-
 Distributed under The Unlicense. See `LICENSE` for more information.
-
 
 
 <!-- CONTACT -->
@@ -167,16 +171,17 @@ Project Link: [https://github.com/lwsmith35/SimpleWebCrawler](https://github.com
 
 
 <!-- ACKNOWLEDGEMENTS -->
+<!--
 ## Acknowledgements
-
 * []()
 * []()
 * []()
-
-
+--> 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links --> [contributors-shield]: https://img.shields.io/github/contributors/lwsmith35/repo.svg?style=flat-square [contributors-url]: https://github.com/lwsmith35/repo/graphs/contributors
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links --> 
+<!--[contributors-shield]: https://img.shields.io/github/contributors/lwsmith35/repo.svg?style=flat-square 
+[contributors-url]: https://github.com/lwsmith35/repo/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/lwsmith35/repo.svg?style=flat-square
 [forks-url]: https://github.com/lwsmith35/repo/network/members
 [stars-shield]: https://img.shields.io/github/stars/lwsmith35/repo.svg?style=flat-square
@@ -188,3 +193,4 @@ Project Link: [https://github.com/lwsmith35/SimpleWebCrawler](https://github.com
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/lawrence-w-smith
 [product-screenshot]: images/screenshot.png
+-->
